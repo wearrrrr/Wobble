@@ -12,6 +12,7 @@ using Wobble.Graphics.UI.Buttons;
 using Wobble.Input;
 using Wobble.Platform;
 using Wobble.Platform.Windows;
+using Microsoft.Xna.Framework.Input;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace Wobble.Graphics.UI.Form

@@ -9,7 +9,7 @@ using Wobble.Logging;
 
 namespace Wobble.Extended.HotReload
 {
-    public class HotLoader : IDisposable, IUpdate
+    public class HotLoader : IDisposable, IUpdateable
     {
         /// <summary>
         ///     The directory that will be watched for changes
@@ -56,6 +56,14 @@ namespace Wobble.Extended.HotReload
         /// </summary>
         public Action AfterCompiling { get; set; }
 
+        public bool Enabled { get; }
+
+        public int UpdateOrder { get; }
+
+        public event EventHandler<EventArgs> EnabledChanged;
+
+        public event EventHandler<EventArgs> UpdateOrderChanged;
+
         /// <summary>
         /// </summary>
         /// <param name="projectDirectory"></param>
@@ -87,7 +95,7 @@ namespace Wobble.Extended.HotReload
         /// </summary>
         public void LoadDll()
         {
-            var path = $@"../../../../{ProjectName}/bin/Debug/netstandard2.1/{ProjectName}.dll";
+            var path = $@"../../../../{ProjectName}/bin/Debug/net9.0/{ProjectName}.dll";
 
             Asm = Assembly.Load(File.ReadAllBytes(path));
 

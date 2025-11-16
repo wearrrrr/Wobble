@@ -125,7 +125,7 @@ namespace Wobble.Graphics.Sprites
         /// <inheritdoc />
         /// <summary>
         /// </summary>
-        public ScrollContainer(ScalableVector2 size, ScalableVector2 contentSize, bool startFromBottom = false)
+        public ScrollContainer(ScalableVector2 size, ScalableVector2 contentSize, bool startFromBottom = false, bool hideScrollbar = false)
         {
             Size = size;
 
@@ -156,7 +156,7 @@ namespace Wobble.Graphics.Sprites
                 Parent = this,
                 Alignment = Alignment.BotRight,
                 Width = 15,
-                Tint = Color.Black,
+                Tint = hideScrollbar ? Color.Transparent : Color.Black,
                 X = 0
             };
 

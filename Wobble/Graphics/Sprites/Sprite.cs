@@ -44,7 +44,7 @@ namespace Wobble.Graphics.Sprites
         /// <summary>
         ///     The rectangle used to render the sprite.
         /// </summary>
-        public RectangleF RenderRectangle { get; set; }
+        public Rectangle RenderRectangle { get; set; }
 
         /// <summary>
         ///     The tint this QuaverSprite will inherit.
@@ -218,9 +218,11 @@ namespace Wobble.Graphics.Sprites
             var rotatedScreenOrigin = (ScreenRectangle.Size * Pivot).Rotate(Parent?.AbsoluteRotation ?? 0);
 
             // Update the render rectangle
-            RenderRectangle = new RectangleF(
-                ScreenRectangle.Position + rotatedScreenOrigin,
-                screenRectangleSize);
+            RenderRectangle = new Rectangle(
+                (int)(ScreenRectangle.Position.X + rotatedScreenOrigin.X),
+                (int)(ScreenRectangle.Position.Y + rotatedScreenOrigin.Y),
+                (int)screenRectangleSize.Width,
+                (int)screenRectangleSize.Height);
 
             SpriteRotation = SpriteRotation;
         }

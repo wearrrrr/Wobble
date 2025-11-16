@@ -83,10 +83,10 @@ namespace Wobble.Graphics
                 objectRect.Width, objectRect.Height);
         }
 
-        public static RectangleF Transform(RectangleF objectRect, Matrix2 matrix, Vector2 scale)
+        public static RectangleF Transform(RectangleF objectRect, Matrix3x2 matrix, Vector2 scale)
         {
             var resultPosition = matrix.Transform(objectRect.Position);
-            var resultSize = new Size2(objectRect.Width * scale.X, objectRect.Height * scale.Y);
+            var resultSize = new SizeF(objectRect.Width * scale.X, objectRect.Height * scale.Y);
             return new RectangleF(resultPosition, resultSize);
         }
 
@@ -106,7 +106,7 @@ namespace Wobble.Graphics
             if (!relative)
                 minimumBoundingRectangle.Offset(objectRect.Position);
             return minimumBoundingRectangle;
-        } 
+        }
 
         /// <summary>
         ///     Converts a Vector2 to Point

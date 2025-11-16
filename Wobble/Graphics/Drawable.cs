@@ -131,7 +131,7 @@ namespace Wobble.Graphics
                 Vector2.Multiply(ref intermediate, ref size, out var intermediate2);
                 Vector2.Add(ref position, ref intermediate2, out var scaledPos);
                 Vector2.Multiply(ref size, ref _scale, out var scaledSize);
-                
+
                 // Update _scaledAlignedRelativeRectangle
                 // So that the rectangle is scaled with its position adjusted according to the pivot and scale
                 _scaledAlignedRelativeRectangle = new RectangleF(scaledPos.X, scaledPos.Y,
@@ -375,13 +375,13 @@ namespace Wobble.Graphics
         /// <summary>
         ///     Applying this to <see cref="AlignedRelativeRectangle"/> gives the screen space position
         /// </summary>
-        private Matrix2 _childPositionTransform = Matrix2.Identity;
+        private Matrix3x2 _childPositionTransform = Matrix3x2.Identity;
 
         /// <summary>
         ///     A transform that rotates the relative coordinates about the pivot
         ///     Applying this to <see cref="AlignedRelativeRectangle"/> gives the relative coordinate after rotation.
         /// </summary>
-        private Matrix2 _childRelativeTransform = Matrix2.Identity;
+        private Matrix3x2 _childRelativeTransform = Matrix3x2.Identity;
 
         /// <summary>
         ///     Determines if the object is going to get drawn.
@@ -469,19 +469,19 @@ namespace Wobble.Graphics
             var relativeOrigin = Pivot * new Vector2(RelativeWidth, RelativeHeight);
 
             // Move so the origin is at RelativeOrigin, rotate, then move back
-            var shiftToOrigin = Matrix2.CreateTranslation(-relativeOrigin);
-            var scalingMatrix = Matrix2.CreateScale(Scale);
-            var rotationMatrix = Matrix2.CreateRotationZ(Rotation);
-            var originBack = Matrix2.CreateTranslation(relativeOrigin * Scale);
-            var thisTranslation = Matrix2.CreateTranslation(_scaledAlignedRelativeRectangle.Position);
-            var parentTransform = Parent?._childPositionTransform ?? Matrix2.Identity;
-            Matrix2.Multiply(ref shiftToOrigin, ref scalingMatrix, out var intermediate1);
-            Matrix2.Multiply(ref rotationMatrix, ref originBack, out var intermediate2);
-            Matrix2.Multiply(ref thisTranslation, ref parentTransform, out var outerTransform);
+            var shiftToOrigin = Matrix3x2.CreateTranslation(-relativeOrigin);
+            var scalingMatrix = Matrix3x2.CreateScale(Scale);
+            var rotationMatrix = Matrix3x2.CreateRotationZ(Rotation);
+            var originBack = Matrix3x2.CreateTranslation(relativeOrigin * Scale);
+            var thisTranslation = Matrix3x2.CreateTranslation(_scaledAlignedRelativeRectangle.Position);
+            var parentTransform = Parent?._childPositionTransform ?? Matrix3x2.Identity;
+            Matrix3x2.Multiply(ref shiftToOrigin, ref scalingMatrix, out var intermediate1);
+            Matrix3x2.Multiply(ref rotationMatrix, ref originBack, out var intermediate2);
+            Matrix3x2.Multiply(ref thisTranslation, ref parentTransform, out var outerTransform);
 
-            Matrix2.Multiply(ref intermediate1, ref intermediate2, out _childRelativeTransform);
+            Matrix3x2.Multiply(ref intermediate1, ref intermediate2, out _childRelativeTransform);
             // Finally, apply our parent's transformation
-            Matrix2.Multiply(ref _childRelativeTransform, ref outerTransform, out _childPositionTransform);
+            Matrix3x2.Multiply(ref _childRelativeTransform, ref outerTransform, out _childPositionTransform);
         }
         /// <inheritdoc />
         /// <summary>
@@ -608,7 +608,7 @@ namespace Wobble.Graphics
             // Update AbsoluteRotation
             AbsoluteRotation = (Parent?.AbsoluteRotation ?? 0) + Rotation;
             AbsoluteScale = (Parent?.AbsoluteScale ?? Vector2.One) * Scale;
-        
+
             RecalculateDrawMask();
 
             // Make it relative to the parent.

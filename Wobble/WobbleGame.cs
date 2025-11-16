@@ -5,6 +5,8 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Platform;
+using ConcreteGameFactory = Microsoft.Xna.Platform;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -117,7 +119,7 @@ namespace Wobble
         /// <summary>
         ///     Creates a game with embedded resources as a content manager.
         /// </summary>
-        protected WobbleGame(bool preferWayland = false) : base(preferWayland)
+        protected WobbleGame(bool preferWayland = false) : base()
         {
             Directory.SetCurrentDirectory(WorkingDirectory);
             Environment.CurrentDirectory = WorkingDirectory;

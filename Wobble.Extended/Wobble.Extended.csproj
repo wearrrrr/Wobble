@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,10 +16,5 @@
       <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Reference Include="MonoGame.Framework">
-        <HintPath>..\MonoGame.Framework.dll</HintPath>
-      </Reference>
-    </ItemGroup>
 
 </Project>
